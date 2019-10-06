@@ -1,30 +1,36 @@
 const Spot = require('../models/Spot');
 const User = require('../models/User');
 module.exports = {
+    async index(req, res){
 
-    // const index = ({
+        const { tech } = req.query;
 
-    // })
+        const spots = await Spot.find({ techs: tech });
+        console.log(spots);
+        return req.json(spots);
+    },
+
     async store(req, res){
         //Acessando o arquivo
-        const {file} = req.file;
+        const {filename} = req.file;
         //Acessando o corpo com os informações enviadas
         const {company, techs, price} = req.body;
         //Acessando o id do usuário pelo header
         const {user_id} = req.headers;
-        const user = await User.findById(user_id);
+
+        // const user = await User.findById(user_id);
 
         // if(!user){
         //     return req.status(400).json({ error: 'Usuário não existe' });
         // }
         const spot = await Spot.create({
             user: user_id,
-            thumbnail: file,
+            thumbnail: filename,
             company,
             techs: techs.split(',').map(tech => tech.trim()),
             price
         })
         console.log(spot);
-        return  res.json({spot})
+        return  res.json(spot)
     }
 };
