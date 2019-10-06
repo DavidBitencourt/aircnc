@@ -7,7 +7,7 @@ module.exports = {
 
         const spots = await Spot.find({ techs: tech });
         console.log(spots);
-        return req.json(spots);
+        return  res.json(spots)
     },
 
     async store(req, res){
