@@ -6,7 +6,7 @@ module.exports = {
         const { tech } = req.query;
 
         const spots = await Spot.find({ techs: tech });
-        console.log(spots);
+      
         return  res.json(spots)
     },
 
@@ -30,7 +30,7 @@ module.exports = {
             techs: techs.split(',').map(tech => tech.trim()),
             price
         })
-        console.log(spot);
+
         return  res.json(spot)
     }
 };

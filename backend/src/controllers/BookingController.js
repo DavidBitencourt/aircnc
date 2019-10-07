@@ -13,6 +13,12 @@ module.exports = {
         //Ao criar um spot essa função também buscas informações do objeto spot e user
         await booking.populate('spot').populate('user').execPopulate();
 
+        const ownerSocket = req.connectedUsers[booking.spot.user];
+
+        if(ownerSocket){
+            req.io.to(ownerSocket).emit('booking_request', booking);
+        }
+        console.log(booking);
         return res.json(booking);
     }
 };
